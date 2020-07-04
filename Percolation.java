@@ -18,8 +18,10 @@ public class Percolation {
         this.size = this.n * this.n + 2;
         //Data structure to store the nodes
         this.wQF = new WeightedQuickUnionUF(size);
+        
+        //WQU for storing the nodes which are percolating and are full as well
         this.fullCheck = new WeightedQuickUnionUF(size);
-        //stores the site state among open, blocked, and percolate.
+        
         this.sites = new boolean[size];
         this.openSites = 0;
     }
@@ -73,7 +75,7 @@ public class Percolation {
         return (this.n * (row - 1)) + (col - 1);
     }
 
-    //Calculate the array index based on row and column value
+    //Connect the node at (row, col) to the virtual top or bottom node
     private void connectVirtualNodes(int row, int col) {
         if (row == 1) {
             int idx = calIndex(row, col);
@@ -122,7 +124,8 @@ public class Percolation {
 
     //test client (optional)
     public static void main(String[] args) {
-
+        
+        //Tester to test if sample matrix of 4*4 is percolating.
         Percolation perc = new Percolation(4);
         perc.open(1, 2);
         StdOut.println("Isfull= " + perc.isFull(1, 2) + " open sites=" + perc.numberOfOpenSites());
